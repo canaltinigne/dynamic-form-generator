@@ -1,0 +1,41 @@
+<!-- ************************* -->
+<!--  CREATED BY CAN ALTINİĞNE -->
+<!--  ARGELA SUMMER INTERNSHIP -->
+<!--          08/16            -->
+<!-- ************************* -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Dynamic Form Builder</title>
+
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="systemjs.config.js"></script>
+
+    <script>
+        System.import('built/form-generator').then(null, console.error.bind(console));
+    </script>
+
+    <style>
+      body {
+        background-image: url("./img/diagonal_fabric.png");
+      }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Josefin+Sans" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js" integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <form-generator></form-generator>
+    <script src="node_modules/bootstrap-validator/dist/validator.min.js"></script>
+</body>
+
+</html>

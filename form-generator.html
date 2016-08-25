@@ -1,0 +1,226 @@
+<!-- ************************* -->
+<!--  CREATED BY CAN ALTINİĞNE -->
+<!--  ARGELA SUMMER INTERNSHIP -->
+<!--          08/16            -->
+<!-- ************************* -->
+
+<!-- ************************ NAVBAR AREA *************************** -->
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <strong class="navbar-brand">{{form_name}}</strong>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <div class="btn-group">
+                <button class="btn btn-danger navbar-btn" (click)="showAddScreen()">{{language | i18nSelect: app_messages.newfieldbutton_message}}</button>
+                <button class="btn btn-info navbar-btn" (click)="showFormScreen()">{{language | i18nSelect: app_messages.showform_message}}</button>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+<!-- **************************************************************** -->
+
+<div class="container">
+    <div class="col-md-6 col-md-offset-3 formDiv">
+        <form class="form-horizontal" role="form" id="myForm">
+
+            <!-- ******************************************* ADD NEW FIELD AREA *********************************************-->
+
+            <div class="alert alert-info" id="addFieldArea">
+
+                <div class="form-group row">
+                    <label for="selectTypeForm" class="control-label col-sm-4 left-align">{{language | i18nSelect: app_messages.select_type}}</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="selectTypeForm">
+                            <option>Text</option>
+                            <option>Email</option>
+                            <option>Password</option>
+                            <option>Dropdown</option>
+                            <option>Radio</option>
+                            <option>Textarea</option>
+                            <option>Date</option>
+                            <option>Number</option>
+                            <option>Checkbox</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="addedFieldLabel" class="control-label col-sm-4 left-align">{{language | i18nSelect: app_messages.field_label}}</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" id="addedFieldLabel">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="addedOption" class="control-label col-sm-4 left-align">{{language | i18nSelect: app_messages.new_option}}</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" id="addedOption">
+                        <div class="help-block">{{language | i18nSelect: app_messages.checkbox_message}}</div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" (click)="addOption()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="requiredInputCheck"> {{language | i18nSelect: app_messages.required_message}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning btn-block" (click)="addField()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{language | i18nSelect: app_messages.addfield_message}}</button>
+                </div>
+
+                <div class="alert alert-danger" id="addFieldArea" style="margin-top: 20px;">
+                    <label>{{language | i18nSelect: app_messages.jsonfile_message}}</label>
+                    <textarea readonly class="jsonArea" style=" height: 150px;">{{stringify(data)}}</textarea>
+                </div>
+            </div>
+
+            <!-- ************************************************************************************************************* -->
+
+            <!-- ******************************************* DYNAMIC ADDED FIELDS *********************************************-->
+
+            <div id="dynamicArea">
+                <div *ngFor="let entry of data">
+
+                    <!-- TEXT INPUTS -->
+
+                    <div *ngIf="entry.type === 'text'" class="form-group row has-feedback">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id={{entry.id}}>
+                            <span *ngIf="entry.required === 'true' || entry.required == true" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                    </div>
+
+                    <!-- EMAIL INPUTS -->
+
+                    <div *ngIf="entry.type === 'email'" class="form-group row has-feedback">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="email" id={{entry.id}} [attr.data-error]="language | i18nSelect: app_messages.email_errors">
+                            <span *ngIf="entry.required === 'true' || entry.required == true" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <!-- PASSWORD INPUTS -->
+
+                    <div *ngIf="entry.type === 'password'" class="form-group row has-feedback">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="password" [attr.data-minlength]="entry.min" id={{entry.id}} [attr.data-minlength-error]="language | i18nSelect: app_messages.minlength_errors">
+                            <span *ngIf="entry.required === 'true' || entry.required == true" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div *ngIf="language == 'en'" class="help-block">Minimum of {{entry.min}} characters.</div>
+                            <div *ngIf="language == 'tr'" class="help-block">Minimum {{entry.min}} karakter giriniz.</div>
+                        </div>
+
+                        <label for="inputPasswordConfirm" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}} Confirm</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" [attr.data-match-error]="language | i18nSelect: app_messages.match_errors" id={{entry.confirmID}}>
+                            <span *ngIf="entry.required === 'true' || entry.required == true" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <!-- DROPDOWN LISTS -->
+
+                    <div *ngIf="entry.type === 'select'" class="form-group row">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id={{entry.id}}>
+                                <option *ngFor="let option of entry.options">{{option.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- RADIO BUTTONS -->
+
+                    <fieldset class="form-group row" *ngIf="entry.type === 'radio'">
+                        <label class="col-form-legend col-sm-4">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <div class="form-check" *ngFor="let option of entry.options">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="option.name" id={{option.id}} value="option.id"> {{option.name}}
+                                </label>
+                            </div>
+                            <div class="help-block with-errors left-align"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- TEXTAREA INPUTS -->
+
+                    <div *ngIf="entry.type === 'textarea'" class="form-group row">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" id={{entry.id}} rows="{{entry.rows}}"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- DATE INPUTS -->
+
+                    <div *ngIf="entry.type === 'date'" class="form-group row">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="date" id={{entry.id}}>
+                        </div>
+                    </div>
+
+                    <!-- NUMBER INPUTS -->
+
+                    <div *ngIf="entry.type === 'number'" class="form-group row">
+                        <label for="entry.id" class="control-label col-sm-4 left-align">{{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="number" id={{entry.id}}>
+                        </div>
+                    </div>
+
+                    <!-- CHECKBOX INPUTS -->
+
+                    <div *ngIf="entry.type === 'checkbox'" class="form-group row">
+                        <label class="col-sm-4"> {{capitalize(entry.label)}}</label>
+                        <div class="col-sm-8">
+                            <div *ngFor="let option of entry.options" class="checkbox">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id={{option.id}}> {{option.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center" style="margin-top: 40px;">
+                    <button type="submit" class="btn btn-success btn-lg btn-block">{{language | i18nSelect: app_messages.submit_message}}</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ************************************ FOOTER ************************************ -->
+
+<div class="container myFooter">
+    <div class="row">
+        <hr>
+        <div class="col-lg-12">
+            <div class="col-md-8">
+                <a href="https://github.com/canaltinigne">https://github.com/canaltinigne</a>
+            </div>
+            <div class="col-md-4">
+                <p class="muted pull-right">Can Altıniğne - 2016</p>
+            </div>
+        </div>
+    </div>
+</div>

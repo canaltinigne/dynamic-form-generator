@@ -1,0 +1,77 @@
+["AngularJS Dynamic Form Builder", "en", {
+    "id": "name",
+    "type": "text",
+    "label": "Name",
+    "required": "true"
+}, {
+    "id": "surname",
+    "type": "text",
+    "label": "Surname",
+    "required": "true"
+}, {
+    "id": "password",
+    "type": "password",
+    "label": "Password",
+    "min": "6",
+    "required": "true",
+    "confirmID": "confirm1"
+}, {
+    "id": "color",
+    "type": "radio",
+    "label": "Gender",
+    "options": [{
+        "id": "color1",
+        "name": "Male"
+    }, {
+        "id": "color2",
+        "name": "Female"
+    }],
+    "required": "true"
+}, {
+    "id": "email",
+    "type": "email",
+    "label": "Email",
+    "required": "true"
+}, {
+    "id": "status",
+    "type": "select",
+    "label": "Choose the name",
+    "options": [{
+        "name": "Mark"
+    }, {
+        "name": "Claire"
+    }, {
+        "name": "Daniel"
+    }, {
+        "name": "Gary"
+    }],
+    "required": "true"
+}, {
+    "id": "comments",
+    "type": "textarea",
+    "label": "Additional Comments",
+    "rows": "6",
+    "required": "true"
+}, {
+    "id": "yumyum",
+    "type": "date",
+    "label": "choose the date",
+    "required": "true"
+}, {
+    "id": "numfield",
+    "type": "number",
+    "label": "choose the number",
+    "required": "true"
+}, {
+    "id": "deneme",
+    "type": "checkbox",
+    "label": "",
+    "options": [{
+        "id": "deneme1",
+        "name": "Check everything"
+    }, {
+        "id": "deneme2",
+        "name": "Check again"
+    }],
+    "required": "true"
+}]

@@ -1,0 +1,41 @@
+/* **************************
+    CREATED BY CAN ALTINİĞNE
+    ARGELA SUMMER INTERNSHIP
+             08/16
+   ************************* */
+
+.formDiv {
+    border: 3px solid navy;
+    border-radius: 6px;
+    padding: 50px;
+    border-style: inset;
+    background-color: rgba(228, 218, 233, 0.7);
+    color: black;
+    margin-top: 20px;
+    font-size: 15px;
+    font-family: "Josefin Sans";
+}
+textarea {
+    overflow: auto;
+    resize: none;
+}
+.left-align {
+    text-align: left;
+}
+.notBold {
+    font-weight: normal;
+}
+.myFooter {
+    font-family: "Josefin Sans";
+    font-size: 15px;
+    font-weight: bold;
+}
+.jsonArea {
+    height: 100%;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;
+    /* Firefox, other Gecko */
+    box-sizing: border-box;
+}
