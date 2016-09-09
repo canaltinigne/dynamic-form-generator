@@ -4,33 +4,14 @@
              08/16
    ************************* */
 
-   // bootstrap validator ayrı bir şekilde yüklenebilir
-   // npm i install  bootstrap-validator
-
 /// <reference path="typings/globals/jquery/index.d.ts" />
 import {Component, Pipe, PipeTransform, ChangeDetectorRef, ChangeDetectionStrategy, Input} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 
-
-@Pipe({
-    name: 'keys',
-    pure: true
-})
-class KeysPipe implements PipeTransform {
-    transform(value, args: string[]): any {
-        var keys = [];
-        for (let key in value) {
-            keys.push({ key: key, value: value[key] });
-        }
-        return keys;
-    }
-}
-
 @Component({
     selector: 'form-generator',
     templateUrl: 'form-generator.html',
-    styleUrls: ['form-generator.css'],
-    pipes: [KeysPipe]
+    styleUrls: ['form-generator.css']
 })
 
 class MyComponent {
@@ -123,7 +104,6 @@ class MyComponent {
 
     constructor(private changeDetector: ChangeDetectorRef) {
         this.getJSONFile();
-
     }
 
     // LOCAL JSON DOSYASININ OKUNMASI
@@ -187,9 +167,6 @@ class MyComponent {
                 }
             });
 
-            document.getElementById("addFieldArea").style.display = "block";
-            document.getElementById("dynamicArea").style.display = "none";
-            console.log(self.data);
             $("#myForm").validator();     // BOOTSTRAP VALIDATOR ÇALIŞTIR
 
         }
@@ -223,11 +200,11 @@ class MyComponent {
             "required": addedRequired,
         });
 
-        if(addedType == "password"){    // GEREKSİZ YERLERİ PUSHLAMA HEPSİ İÇİN
-          this.data[this.data.length - 1]['confirmID'] = addedConfirmID;
-          this.data[this.data.length - 1]['min'] = 8;
-        } else if (addedType == "radio" || addedType == "checkbox" || addedType == "select"){
-          this.data[this.data.length - 1]['options'] = this.addedOptions;
+        if (addedType == "password") {    // GEREKSİZ YERLERİ PUSHLAMA HEPSİ İÇİN
+            this.data[this.data.length - 1]['confirmID'] = addedConfirmID;
+            this.data[this.data.length - 1]['min'] = 8;
+        } else if (addedType == "radio" || addedType == "checkbox" || addedType == "select") {
+            this.data[this.data.length - 1]['options'] = this.addedOptions;
         }
 
         this.changeDetector.detectChanges();
@@ -282,25 +259,20 @@ class MyComponent {
     public addOption(): any {
         var myName = $("#addedOption").val();
         var myID = "myoption" + this.option_counter;
-        console.log(typeof myID);
+
         this.addedOptions.push({ "id": myID, "name": myName });
         this.option_counter++;
     }
 
     public showAddScreen(): any {
-        if (this.situation == false) {
-            document.getElementById("addFieldArea").style.display = "block";
-            document.getElementById("dynamicArea").style.display = "none";
-            this.situation = true;
-        }
+        if (this.situation == true)
+            this.situation = false;
+
     }
 
     public showFormScreen(): any {
-        if (this.situation == true) {
-            document.getElementById("addFieldArea").style.display = "none";
-            document.getElementById("dynamicArea").style.display = "block";
-            this.situation = false;
-        }
+        if (this.situation == false)
+            this.situation = true;
     }
 
     public stringify(input: any): string {

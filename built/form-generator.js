@@ -1,3 +1,8 @@
+/* **************************
+    CREATED BY CAN ALTINİĞNE
+    ARGELA SUMMER INTERNSHIP
+             08/16
+   ************************* */
 System.register(['@angular/core', '@angular/platform-browser-dynamic'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -11,7 +16,7 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, platform_browser_dynamic_1;
-    var KeysPipe, MyComponent;
+    var MyComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -21,25 +26,6 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                 platform_browser_dynamic_1 = platform_browser_dynamic_1_1;
             }],
         execute: function() {
-            KeysPipe = (function () {
-                function KeysPipe() {
-                }
-                KeysPipe.prototype.transform = function (value, args) {
-                    var keys = [];
-                    for (var key in value) {
-                        keys.push({ key: key, value: value[key] });
-                    }
-                    return keys;
-                };
-                KeysPipe = __decorate([
-                    core_1.Pipe({
-                        name: 'keys',
-                        pure: true
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], KeysPipe);
-                return KeysPipe;
-            }());
             MyComponent = (function () {
                 function MyComponent(changeDetector) {
                     this.changeDetector = changeDetector;
@@ -114,13 +100,14 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                     };
                     this.getJSONFile();
                 }
+                // LOCAL JSON DOSYASININ OKUNMASI
                 MyComponent.prototype.getJSONFile = function () {
                     var request = new XMLHttpRequest();
                     var self = this;
                     request.onload = function () {
                         self.data = JSON.parse(this.responseText);
                         self.form_name = self.data[0];
-                        self.changeDetector.detectChanges();
+                        self.changeDetector.detectChanges(); // SAYFA TAMAMEN DOLMADAN JQUERY ÇALIŞTIRMA
                         $.each(self.data, function (key, value) {
                             if (value == "en" || value == "tr") {
                                 self.language = value;
@@ -129,6 +116,8 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                                 $("#" + value.id).attr("required", "required");
                             }
                             if (value.type == "password") {
+                                // EĞER EKLENEN PASSWORD İSE CONFIRM EDİLDİĞİ ALANA DA REQUIRED ÖZELLİĞİ EKLE VE DATA MATCH İÇİN
+                                // ATTRIBUTE EKLE
                                 $("#" + value.confirmID).attr("required", "required");
                                 $("#" + value.confirmID).attr("data-match", "#" + value.id);
                                 if (value.required = "true") {
@@ -161,10 +150,7 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                                 }
                             }
                         });
-                        document.getElementById("addFieldArea").style.display = "block";
-                        document.getElementById("dynamicArea").style.display = "none";
-                        console.log(self.data);
-                        $("#myForm").validator();
+                        $("#myForm").validator(); // BOOTSTRAP VALIDATOR ÇALIŞTIR
                     };
                     request.open("get", "deneme.json", true);
                     request.send();
@@ -201,6 +187,8 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                         $("#" + addedID).attr("required", "required");
                     }
                     if (addedType == "password") {
+                        // EĞER EKLENEN PASSWORD İSE CONFIRM EDİLDİĞİ ALANA DA REQUIRED ÖZELLİĞİ EKLE VE DATA MATCH İÇİN
+                        // ATTRIBUTE EKLE
                         $("#" + addedConfirmID).attr("required", "required");
                         $("#" + addedConfirmID).attr("data-match", "#" + addedID);
                         if (addedRequired == 'true') {
@@ -239,23 +227,16 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                 MyComponent.prototype.addOption = function () {
                     var myName = $("#addedOption").val();
                     var myID = "myoption" + this.option_counter;
-                    console.log(typeof myID);
                     this.addedOptions.push({ "id": myID, "name": myName });
                     this.option_counter++;
                 };
                 MyComponent.prototype.showAddScreen = function () {
-                    if (this.situation == false) {
-                        document.getElementById("addFieldArea").style.display = "block";
-                        document.getElementById("dynamicArea").style.display = "none";
-                        this.situation = true;
-                    }
+                    if (this.situation == true)
+                        this.situation = false;
                 };
                 MyComponent.prototype.showFormScreen = function () {
-                    if (this.situation == true) {
-                        document.getElementById("addFieldArea").style.display = "none";
-                        document.getElementById("dynamicArea").style.display = "block";
-                        this.situation = false;
-                    }
+                    if (this.situation == false)
+                        this.situation = true;
                 };
                 MyComponent.prototype.stringify = function (input) {
                     return JSON.stringify(input);
@@ -264,8 +245,7 @@ System.register(['@angular/core', '@angular/platform-browser-dynamic'], function
                     core_1.Component({
                         selector: 'form-generator',
                         templateUrl: 'form-generator.html',
-                        styleUrls: ['form-generator.css'],
-                        pipes: [KeysPipe]
+                        styleUrls: ['form-generator.css']
                     }), 
                     __metadata('design:paramtypes', [core_1.ChangeDetectorRef])
                 ], MyComponent);

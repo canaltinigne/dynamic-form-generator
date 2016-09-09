@@ -28,7 +28,7 @@
 
             <!-- ******************************************* ADD NEW FIELD AREA *********************************************-->
 
-            <div class="alert alert-info" id="addFieldArea">
+            <div class="alert alert-info" id="addFieldArea" [hidden]="situation">
 
                 <div class="form-group row">
                     <label for="selectTypeForm" class="control-label col-sm-4 left-align">{{language | i18nSelect: app_messages.select_type}}</label>
@@ -90,7 +90,7 @@
 
             <!-- ******************************************* DYNAMIC ADDED FIELDS *********************************************-->
 
-            <div id="dynamicArea">
+            <div id="dynamicArea" [hidden]="!situation">
                 <div *ngFor="let entry of data">
 
                     <!-- TEXT INPUTS -->
