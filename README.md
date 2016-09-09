@@ -2,4 +2,5 @@
 This single web page application was my project as an intern at Argela Technologies.
 
 ###Usage
-Use npm install for packages. Then you're good to go.
+* Type "npm install" in Terminal for package installing.
+* Then type "npm start" to start the local application and Voila !
